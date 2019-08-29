@@ -8,6 +8,136 @@
 </head>
 <body>
     <h1>Mencetak Daftar Aktifitas pada Aplikasi E-RK</h1>
+ <code>
+ (function() {
+    "use strict";
+	
+console.clear();
+
+function getAktifitas(selector)
+{
+	var results = [];
+	var pattern = /\s+Waktu\s+:\s+([\d]*)\s+Menit/img;
+	document.querySelectorAll(selector).forEach(function(item, index) {
+		var text = item.querySelector("p").textContent;
+		var durasi = /Waktu\s+:\s+([^\s]*)/img.exec(text), nomor = index + 1;
+		if( /\s+waktu\s+:/img.test(text) ) {
+			text = text.replace(/\s+Waktu.*Menit/img, '');
+			text = text.replace(/^\d+.\s+/img, '');
+			results.push({durasi: parseInt( durasi[1].trim() ), aktifitas: text.trim()});
+		}
+	});
+	
+	// Mengurutkan aktifitas berdasarkan durasi
+	results.sort(function(a, b) {
+		return a.durasi - b.durasi;
+	});
+	results.reverse();
+	
+	var html = '';
+	results.forEach(function(item, index) {
+		var nomor = index + 1;
+		html = `${html} <tr>
+			<td class="text-center" style="width: 80px;" nowrap>${nomor}</td>
+			<td class="text-center" style="width: 80px;" nowra>${item.durasi}</td>
+			<td>${item.aktifitas}</td>
+			</tr> `;
+	});
+	return html;
+}
+
+var title ="Cetak Daftar Aktifitas";
+var aktivitasUtama = getAktifitas('div#pilih-aktivitas-scroller > div');
+var aktivitasTambahan = getAktifitas('div#pilih-aktivitas-tambahan-scroller > div');
+console.log(aktivitasUtama);
+
+var namaPegawai = document.querySelector("a.profile-header > div > b").textContent, 
+	namaJabatan = document.querySelector("a.profile-header > div > span").textContent, nipPegawai;
+var newtab = window.open();
+newtab.document.open();
+newtab.document.write(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>${title}</title>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-exp.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-icons.min.css" />
+
+	<style>
+@media print {
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+	<h3 class="text-center text-uppercase">Daftar Aktifitas</h3>
+	<div class="divider"></div>
+</div>
+
+<div class="container">
+	<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+		<tr>
+			<td style="width: 120px;" nowrap>Nama Pegawai</td>
+			<td style="width: 25px; text-align: center;">:</td>
+			<td class="text-bold">${namaPegawai}</td>
+		</tr>
+		<tr>
+			<td nowrap>Jabatan Fungsional</td>
+			<td style="text-align: center;">:</td>
+			<td class="text-uppercase text-bold">${namaJabatan}</td>
+		</tr>
+	</table>
+	<h5>&nbsp;</h5>
+</div>
+
+<div class="container">
+	<table class="table table-striped">
+		<thead>
+			<tr class="text-center">
+				<th nowrap>NO</th>
+				<th nowrap>DURASI</th>
+				<th nowrap>AKTIFITAS UTAMA</th>
+			</tr>
+		</thead>
+		<tbody>
+			${aktivitasUtama}
+		</tbody>
+	</table>
+</div>
+
+<div class="pagebreak"> </div>
+
+<div class="container">
+	<table class="table table-striped">
+		<thead>
+			<tr class="text-center">
+				<th nowrap>NO</th>
+				<th nowrap>DURASI</th>
+				<th nowrap>AKTIFITAS TAMBAHAN</th>
+			</tr>
+		</thead>
+		<tbody>
+			${aktivitasTambahan}
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>
+`);
+newtab.document.close();
+newtab.focus();
+setTimeout(function () { newtab.print(); newtab.close(); }, 100);
+
+})();    
+    </code>
     
 </body>
 </html>
