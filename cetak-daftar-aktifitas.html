@@ -2,15 +2,517 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Cara mencetak daftar Aktifitas pada Aplikasi ERK</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.css" />
+
+    <style>
+/* stylelint-disable selector-list-comma-newline-after */
+
+.blog-header {
+  line-height: 1;
+  /* border-bottom: 1px solid #e5e5e5; */
+}
+
+.blog-header-logo {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 2.25rem;
+}
+
+.blog-header-logo:hover {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+}
+@media (min-width: 768px) {
+  .display-4 {
+    font-size: 3rem;
+  }
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroller .nav-link {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: .875rem;
+}
+
+.card-img-right {
+  height: 100%;
+  border-radius: 0 3px 3px 0;
+}
+
+.flex-auto {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.h-250 { height: 250px; }
+@media (min-width: 768px) {
+  .h-md-250 { height: 250px; }
+}
+
+/*
+ * Blog name and description
+ */
+.blog-title {
+  margin-bottom: 0;
+  font-size: 2rem;
+  font-weight: 400;
+}
+.blog-description {
+  font-size: 1.1rem;
+  color: #999;
+}
+
+@media (min-width: 40em) {
+  .blog-title {
+    font-size: 3.5rem;
+  }
+}
+
+/* Pagination */
+.blog-pagination {
+  margin-bottom: 4rem;
+}
+.blog-pagination > .btn {
+  border-radius: 2rem;
+}
+
+/*
+ * Blog posts
+ */
+.blog-post {
+  margin-bottom: 4rem;
+}
+.blog-post-title {
+  margin-bottom: .25rem;
+  font-size: 2.5rem;
+}
+.blog-post-meta {
+  margin-bottom: 1.25rem;
+  color: #999;
+}
+
+/*
+ * Footer
+ */
+.blog-footer {
+  padding: 2.5rem 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: .05rem solid #e5e5e5;
+}
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+    </style>
 </head>
 <body>
-    <h1>Mencetak Daftar Aktifitas pada Aplikasi E-RK</h1>
- <code>
-(function() { &quot;use strict&quot;; console.clear(); function getAktifitas(selector) { var results = []; var pattern = /\s+Waktu\s+:\s+([\d]*)\s+Menit/img; document.querySelectorAll(selector).forEach(function(item, index) { var text = item.querySelector(&quot;p&quot;).textContent; var durasi = /Waktu\s+:\s+([^\s]*)/img.exec(text), nomor = index + 1; if( /\s+waktu\s+:/img.test(text) ) { text = text.replace(/\s+Waktu.*Menit/img, ''); text = text.replace(/^\d+.\s+/img, ''); results.push({durasi: parseInt( durasi[1].trim() ), aktifitas: text.trim()}); } }); // Mengurutkan aktifitas berdasarkan durasi results.sort(function(a, b) { return a.durasi - b.durasi; }); results.reverse(); var html = ''; results.forEach(function(item, index) { var nomor = index + 1; html = `${html} &lt;tr&gt; &lt;td class=&quot;text-center&quot; style=&quot;width: 80px;&quot; nowrap&gt;${nomor}&lt;/td&gt; &lt;td class=&quot;text-center&quot; style=&quot;width: 80px;&quot; nowra&gt;${item.durasi}&lt;/td&gt; &lt;td&gt;${item.aktifitas}&lt;/td&gt; &lt;/tr&gt; `; }); return html; } var title =&quot;Cetak Daftar Aktifitas&quot;; var aktivitasUtama = getAktifitas('div#pilih-aktivitas-scroller &gt; div'); var aktivitasTambahan = getAktifitas('div#pilih-aktivitas-tambahan-scroller &gt; div'); console.log(aktivitasUtama); var namaPegawai = document.querySelector(&quot;a.profile-header &gt; div &gt; b&quot;).textContent, namaJabatan = document.querySelector(&quot;a.profile-header &gt; div &gt; span&quot;).textContent, nipPegawai; var newtab = window.open(); newtab.document.open(); newtab.document.write(` &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt; &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt; &lt;title&gt;${title}&lt;/title&gt; &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre.css&quot; /&gt; &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-exp.min.css&quot; /&gt; &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-icons.min.css&quot; /&gt; &lt;style&gt; @media print { .pagebreak { page-break-before: always; } /* page-break-after works, as well */ } &lt;/style&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&quot;container&quot;&gt; &lt;h3 class=&quot;text-center text-uppercase&quot;&gt;Daftar Aktifitas&lt;/h3&gt; &lt;div class=&quot;divider&quot;&gt;&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;container&quot;&gt; &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;width: 100%;&quot;&gt; &lt;tr&gt; &lt;td style=&quot;width: 120px;&quot; nowrap&gt;Nama Pegawai&lt;/td&gt; &lt;td style=&quot;width: 25px; text-align: center;&quot;&gt;:&lt;/td&gt; &lt;td class=&quot;text-bold&quot;&gt;${namaPegawai}&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td nowrap&gt;Jabatan Fungsional&lt;/td&gt; &lt;td style=&quot;text-align: center;&quot;&gt;:&lt;/td&gt; &lt;td class=&quot;text-uppercase text-bold&quot;&gt;${namaJabatan}&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;h5&gt;&amp;nbsp;&lt;/h5&gt; &lt;/div&gt; &lt;div class=&quot;container&quot;&gt; &lt;table class=&quot;table table-striped&quot;&gt; &lt;thead&gt; &lt;tr class=&quot;text-center&quot;&gt; &lt;th nowrap&gt;NO&lt;/th&gt; &lt;th nowrap&gt;DURASI&lt;/th&gt; &lt;th nowrap&gt;AKTIFITAS UTAMA&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; ${aktivitasUtama} &lt;/tbody&gt; &lt;/table&gt; &lt;/div&gt; &lt;div class=&quot;pagebreak&quot;&gt; &lt;/div&gt; &lt;div class=&quot;container&quot;&gt; &lt;table class=&quot;table table-striped&quot;&gt; &lt;thead&gt; &lt;tr class=&quot;text-center&quot;&gt; &lt;th nowrap&gt;NO&lt;/th&gt; &lt;th nowrap&gt;DURASI&lt;/th&gt; &lt;th nowrap&gt;AKTIFITAS TAMBAHAN&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; ${aktivitasTambahan} &lt;/tbody&gt; &lt;/table&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt; `); newtab.document.close(); newtab.focus(); setTimeout(function () { newtab.print(); newtab.close(); }, 100); })();
-    </code>
     
+    <div class="container">
+        <header class="blog-header py-3"></header>
+    </div>
+
+    <main role="main" class="container">
+  <div class="row">
+    <div class="col-md-12 blog-main">
+      
+
+      <!-- /.blog-post -->
+
+      <!-- /.blog-post -->
+
+      <div class="blog-post">
+        <h2 class="blog-post-title">Cara mencetak daftar Aktifitas pada Aplikasi ERK</h2>
+        <p class="blog-post-meta">29 Agustus 2019, oleh <a href="javascript:void(0);">Hendrik Yeyosa</a></p>
+
+        <ol>
+          <li>
+              Buka browser yang anda gunakan (Chrome atau Firefox).
+          </li>
+          <li>
+              Copy source di bawah ini pada console web browser.
+              <?php $loadFile = file_get_contents("test.js"); ?>
+<pre class="line-numbers" data-src="//cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.css">
+<code class="language-js"><?php echo trim( htmlentities($loadFile) ); ?></code></pre>
+          </li>
+        </ol>
+      </div><!-- /.blog-post -->
+
+      
+
+    </div><!-- /.blog-main -->
+
+    <!-- /.blog-sidebar -->
+
+  </div><!-- /.row -->
+
+</main>
+
+    <footer class="blog-footer">
+        <p>
+            Blog template built for 
+            <a href="https://getbootstrap.com/">Bootstrap</a>
+        </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cara mencetak daftar Aktifitas pada Aplikasi ERK</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.css" />
+
+    <style>
+/* stylelint-disable selector-list-comma-newline-after */
+
+.blog-header {
+  line-height: 1;
+  /* border-bottom: 1px solid #e5e5e5; */
+}
+
+.blog-header-logo {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 2.25rem;
+}
+
+.blog-header-logo:hover {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+}
+@media (min-width: 768px) {
+  .display-4 {
+    font-size: 3rem;
+  }
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroller .nav-link {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: .875rem;
+}
+
+.card-img-right {
+  height: 100%;
+  border-radius: 0 3px 3px 0;
+}
+
+.flex-auto {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.h-250 { height: 250px; }
+@media (min-width: 768px) {
+  .h-md-250 { height: 250px; }
+}
+
+/*
+ * Blog name and description
+ */
+.blog-title {
+  margin-bottom: 0;
+  font-size: 2rem;
+  font-weight: 400;
+}
+.blog-description {
+  font-size: 1.1rem;
+  color: #999;
+}
+
+@media (min-width: 40em) {
+  .blog-title {
+    font-size: 3.5rem;
+  }
+}
+
+/* Pagination */
+.blog-pagination {
+  margin-bottom: 4rem;
+}
+.blog-pagination > .btn {
+  border-radius: 2rem;
+}
+
+/*
+ * Blog posts
+ */
+.blog-post {
+  margin-bottom: 4rem;
+}
+.blog-post-title {
+  margin-bottom: .25rem;
+  font-size: 2.5rem;
+}
+.blog-post-meta {
+  margin-bottom: 1.25rem;
+  color: #999;
+}
+
+/*
+ * Footer
+ */
+.blog-footer {
+  padding: 2.5rem 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: .05rem solid #e5e5e5;
+}
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <header class="blog-header py-3"></header>
+    </div>
+
+    <main role="main" class="container">
+  <div class="row">
+    <div class="col-md-12 blog-main">
+      
+
+      <!-- /.blog-post -->
+
+      <!-- /.blog-post -->
+
+      <div class="blog-post">
+        <h2 class="blog-post-title">Cara mencetak daftar Aktifitas pada Aplikasi ERK</h2>
+        <p class="blog-post-meta">29 Agustus 2019, oleh <a href="javascript:void(0);">Hendrik Yeyosa</a></p>
+
+        <ol>
+          <li>
+              Buka browser yang anda gunakan (Chrome atau Firefox).
+          </li>
+          <li>
+              Copy source di bawah ini pada console web browser.
+              <pre class="line-numbers" data-src="//cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.css">
+<code class="language-js">(function() {
+    &quot;use strict&quot;;
+	
+console.clear();
+
+function getAktifitas(selector)
+{
+	var results = [];
+	var pattern = /\s+Waktu\s+:\s+([\d]*)\s+Menit/img;
+	document.querySelectorAll(selector).forEach(function(item, index) {
+		var text = item.querySelector(&quot;p&quot;).textContent;
+		var durasi = /Waktu\s+:\s+([^\s]*)/img.exec(text), nomor = index + 1;
+		if( /\s+waktu\s+:/img.test(text) ) {
+			text = text.replace(/\s+Waktu.*Menit/img, '');
+			text = text.replace(/^\d+.\s+/img, '');
+			results.push({durasi: parseInt( durasi[1].trim() ), aktifitas: text.trim()});
+		}
+	});
+	
+	// Mengurutkan aktifitas berdasarkan durasi
+	results.sort(function(a, b) {
+		return a.durasi - b.durasi;
+	});
+	results.reverse();
+	
+	var html = '';
+	results.forEach(function(item, index) {
+		var nomor = index + 1;
+		html = `${html} &lt;tr&gt;
+			&lt;td class=&quot;text-center&quot; style=&quot;width: 80px;&quot; nowrap&gt;${nomor}&lt;/td&gt;
+			&lt;td class=&quot;text-center&quot; style=&quot;width: 80px;&quot; nowra&gt;${item.durasi}&lt;/td&gt;
+			&lt;td&gt;${item.aktifitas}&lt;/td&gt;
+			&lt;/tr&gt; `;
+	});
+	return html;
+}
+
+var title =&quot;Cetak Daftar Aktifitas&quot;;
+var aktivitasUtama = getAktifitas('div#pilih-aktivitas-scroller &gt; div');
+var aktivitasTambahan = getAktifitas('div#pilih-aktivitas-tambahan-scroller &gt; div');
+console.log(aktivitasUtama);
+
+var namaPegawai = document.querySelector(&quot;a.profile-header &gt; div &gt; b&quot;).textContent, 
+	namaJabatan = document.querySelector(&quot;a.profile-header &gt; div &gt; span&quot;).textContent, nipPegawai;
+var newtab = window.open();
+newtab.document.open();
+newtab.document.write(`
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;${title}&lt;/title&gt;
+	
+	&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre.css&quot; /&gt;
+	&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-exp.min.css&quot; /&gt;
+	&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre-icons.min.css&quot; /&gt;
+
+	&lt;style&gt;
+@media print {
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+	&lt;h3 class=&quot;text-center text-uppercase&quot;&gt;Daftar Aktifitas&lt;/h3&gt;
+	&lt;div class=&quot;divider&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+	&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;width: 100%;&quot;&gt;
+		&lt;tr&gt;
+			&lt;td style=&quot;width: 120px;&quot; nowrap&gt;Nama Pegawai&lt;/td&gt;
+			&lt;td style=&quot;width: 25px; text-align: center;&quot;&gt;:&lt;/td&gt;
+			&lt;td class=&quot;text-bold&quot;&gt;${namaPegawai}&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td nowrap&gt;Jabatan Fungsional&lt;/td&gt;
+			&lt;td style=&quot;text-align: center;&quot;&gt;:&lt;/td&gt;
+			&lt;td class=&quot;text-uppercase text-bold&quot;&gt;${namaJabatan}&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/table&gt;
+	&lt;h5&gt;&amp;nbsp;&lt;/h5&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+	&lt;table class=&quot;table table-striped&quot;&gt;
+		&lt;thead&gt;
+			&lt;tr class=&quot;text-center&quot;&gt;
+				&lt;th nowrap&gt;NO&lt;/th&gt;
+				&lt;th nowrap&gt;DURASI&lt;/th&gt;
+				&lt;th nowrap&gt;AKTIFITAS UTAMA&lt;/th&gt;
+			&lt;/tr&gt;
+		&lt;/thead&gt;
+		&lt;tbody&gt;
+			${aktivitasUtama}
+		&lt;/tbody&gt;
+	&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;pagebreak&quot;&gt; &lt;/div&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+	&lt;table class=&quot;table table-striped&quot;&gt;
+		&lt;thead&gt;
+			&lt;tr class=&quot;text-center&quot;&gt;
+				&lt;th nowrap&gt;NO&lt;/th&gt;
+				&lt;th nowrap&gt;DURASI&lt;/th&gt;
+				&lt;th nowrap&gt;AKTIFITAS TAMBAHAN&lt;/th&gt;
+			&lt;/tr&gt;
+		&lt;/thead&gt;
+		&lt;tbody&gt;
+			${aktivitasTambahan}
+		&lt;/tbody&gt;
+	&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+`);
+newtab.document.close();
+newtab.focus();
+setTimeout(function () { newtab.print(); newtab.close(); }, 100);
+
+})();</code></pre>
+          </li>
+        </ol>
+      </div><!-- /.blog-post -->
+
+      
+
+    </div><!-- /.blog-main -->
+
+    <!-- /.blog-sidebar -->
+
+  </div><!-- /.row -->
+
+</main>
+
+    <footer class="blog-footer">
+        <p>
+            Blog template built for 
+            <a href="https://getbootstrap.com/">Bootstrap</a>
+        </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/line-numbers/prism-line-numbers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js"></script>
+
 </body>
 </html>
