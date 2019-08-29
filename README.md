@@ -5,4 +5,4 @@
 
 [Cara mencetak daftar Aktifitas pada Aplikasi ERK]("https://yosacyber.github.io/cetak-daftar-aktifitas.html" target="_blank")
 
-<a href="example.com" target="_blank">New Tab</a>
+<a href="https://yosacyber.github.io/cetak-daftar-aktifitas.html" target="_blank">Cara mencetak daftar Aktifitas pada Aplikasi ERK</a>
