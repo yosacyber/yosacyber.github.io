@@ -3,4 +3,4 @@
 1. [Cara mencetak daftar Aktifitas pada Aplikasi ERK](https://yosacyber.github.io/cetak-daftar-aktifitas.html){:target="_blank"}
 [Cara mencetak daftar Aktifitas pada Aplikasi ERK](https://yosacyber.github.io/cetak-daftar-aktifitas.html "title" target="_blank")
 
-[Cara mencetak daftar Aktifitas pada Aplikasi ERK](https://yosacyber.github.io/cetak-daftar-aktifitas.html" target="_blank)
+[Cara mencetak daftar Aktifitas pada Aplikasi ERK]("https://yosacyber.github.io/cetak-daftar-aktifitas.html" target="_blank)
